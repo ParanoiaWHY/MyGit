@@ -1,0 +1,123 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{lmodern} % http://ctan.org/pkg/lm
+\usepackage[margin=2.5cm]{geometry} %左右上下边距均为2.5cm
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[style=gb7714-2015,backend=biber]{biblatex}
+\addbibresource{References.bib}
+\usepackage{titlesec} %修改章节标题\chapter、\section 等的格式
+\usepackage{titletoc} %修改目录中各条目的格式
+
+\usepackage{tcolorbox} %利用tcolorbox定制双边框线
+\usepackage{lipsum} %产生随机文本
+\usepackage{indentfirst} %缩进
+
+
+\setlength{\parindent}{2em} %设置段首缩进两个汉字
+
+
+\titleclass{\section}{top}
+\newcommand\sectionbreak{\clearpage} %设置section自动clearpage
+
+\tcbuselibrary{skins,breakable} %使用tcolorbox库:skins,breakable
+\tcbset{colframe=black,colback=white,boxsep=0mm,top=1pt,left=1pt,right=1pt} %白底黑框,文本与框线的左右及顶间距
+\tcbsubskin{mycross}{empty}{
+    frame code={%
+        \draw[black,line width=0.75pt,double=white,double distance=2pt]
+        (frame.south west) rectangle (frame.north east);
+    },
+    skin first=mycross,skin middle=mycross,skin last=mycross
+} 
+%定义mycross为tcbsubskin
+
+\newtcolorbox{mybox}{enhanced,arc=0mm,outer arc=0mm,width=\textwidth,breakable,skin=mycross,height fixed for=all,height fill} %定义newtcolorbox
+
+\title{UHPC深梁抗剪承载力研究}
+\author{paranoia}
+\date{}
+
+\begin{document}
+%\maketitle %生成标题页
+
+\section{立题背景及意义}
+
+\begin{mybox}
+
+\subsection{UHPC---超高性能混凝土}
+\parindent=2em UHPC(Ultra-High-Performance-Concrete)即超高性能混凝土,是一种超高强水泥基材料,其具有高强度、高韧性、高耐久性、高密实性、高抗渗性、高抗冻融性~~\cite{阎培渝2010超高性能混凝土}。
+1994年,Fran{\c{c}}ois\ de Larrard等首次提出UHPC的概念~~\cite{Sedran1994Optimization}。UHPC的设计理论是最大堆积密度理论,
+其组成材料不同粒径颗粒以最佳比例形成最紧密堆积,即毫米级颗粒(骨料)堆积的间隙由微米级颗粒(水泥、粉煤灰、矿粉)填充,微米级颗粒堆积的间隙由亚微米级颗粒(硅灰)填充。
+早在1931年,Andressen就建立了最大堆积密度理论的数学模型。
+
+\subsection{UHPC的应用及研究}
+
+\indent UHPC以其优异的性能在高速铁路、地铁、大坝、楼梯和桥梁中得到广泛应用
+~\cite{王德辉2016超高性能混凝土在中国的研究和应用},尤以桥梁工程为应用最广。
+文献~\parencite{杜任远2013活性粉末混凝土桥梁应用与研究}
+列出了国内已建成的一座UHPC预应力简支Ｔ梁---迁曹铁路滦柏干渠大桥及国外已建成的32座UHPC桥梁,
+余自若等~\cite{余自若2004铁路}进行了UHPC单箱单室梁的抗弯性能缩尺试验研究,
+邵旭东等~\cite{邵旭东2013超大跨径单向预应力}开展了对400m跨径的UHPC连续箱梁的试设计并进行了UHPC材性试验、UHPC板抗弯拉强度试验、腹板抗剪试验及徐变试验。对于UHPC梁的抗弯承载力,已有较多文献进行相关试验,
+傅元方~\cite{傅元方2016UHPC}以钢纤维体积掺量、配筋率为基本参数,进行了12根UHPC梁和2根普通钢筋混凝土(Reinforced Concrete,RC)梁的受弯性能试验研究,分析推导出可供工程设计参考的开裂弯矩与抗弯承载力计算公式,
+马熙伦等~\cite{2019钢纤维掺量对}以钢纤维掺量为主要参数,进行了5根R-UHPC梁的受弯性能试验,推导了R-UHPC梁抗弯极限承载力的计算方法,
+梁兴文等~\cite{2019配筋超高性能混凝土梁受弯性能及承载力研究}以钢纤维体积掺量和纵向受拉钢筋配筋率为试验变化参数对4根高跨比为16的配筋UHPC简支梁进行抗弯试验,并基于截面平衡条件、平截面假定及材料的本构关系
+建立了UHPC梁受弯承载力计算模型,
+邓宗才等~\cite{邓宗才2015高强钢筋}通过6根UHPC梁的正截面抗弯试验,研究了配筋率、截面形式(矩形和T形)对抗弯性能的影响规律,建立了UHPC梁的开裂弯矩和极限弯矩计算公式。
+而对于UHPC梁的抗剪承载机理及抗剪承载力公式,则仅为数不多的文献涉及,
+梁兴文等~\cite{2018超高性能混凝土有腹筋梁受剪性能及受剪承载力研究}以剪跨比、纵筋配筋率、配箍率、钢纤维掺量为变化参数对7根UHPC有腹筋梁进行受剪性能试验并提出了UHPC有腹筋梁受剪承载力计算模型，
+徐海宾等~\cite{徐海宾2015超高性能混凝土梁抗剪承载力计算方法}分别采用极限平衡法、修正压力场理论和塑性理论对超高性能混凝土梁抗剪承载力进行分析,
+金凌志等~\cite{金凌志2013高强钢筋活性粉末混凝土简支梁受剪性能试验研究}通过试验研究分析了剪跨比、配箍率、纵筋配筋率和钢筋等级等因素对高强钢筋活性粉末混凝土简支梁受剪性能的影响，
+她~\cite{金凌志2015拉}还基于拉压杆模型(STM)构建RPC无腹筋简支梁抗剪承载力计算公式，
+马熙伦等~\cite{马熙伦2017r}分析了现有的抗剪承载力计算方法，研究了R-UHPC梁的抗剪机理,并考虑UHPC的抗拉作用,提出了基于桁架-拱模型的R-UHPC梁抗剪承载力计算方法。
+可见，目前国内外对于UHPC梁的抗剪研究还较少，大多是基于已有的方法进行分析比较，未对其背后的抗剪机理作过多论述，且目前各公式都有一定的局限性，因此有必要对UHPC梁的抗剪做更进一步的研究。
+
+\indent 同时UHPC的工程应用越来越广，研究UHPC梁的抗剪对于UHPC意义不可谓不大，可更好的指导工程实际，推动UHPC相关规范的筹备、制定。
+
+\subsection{小剪跨比UHPC梁抗剪承载力}
+
+剪跨比~\cite{叶见曙1997结构设计原理}($\lambda$)指构件截面弯矩($M$)与剪力($V$)和截面有效高度($h_0$)乘积的比值，即: \[\lambda = \frac{M}{Vh_0}\]
+
+对于简支梁，剪跨比为梁上集中荷载作用点到支座边缘的最小距离($a$)---剪跨与截面有效高度($h_0$)之比，即: \[\lambda = \frac{a}{h_0}\]
+试验研究表明:简支砼梁(有腹筋或无腹筋)的抗剪承载力随剪跨比$\lambda$的增大而减小，且斜截面破坏形态由斜压破坏($\lambda<1$) $\rightarrow$ 剪压破坏($1 \leqslant \lambda \leqslant 3$) 
+$\rightarrow$ 斜拉破坏($\lambda \geqslant 3$)。
+
+对于钢筋混凝土梁的抗剪承载力，丁艳梅等~\cite{丁艳梅2009钢筋混凝土梁斜截面受剪承载力统一计算公式的研究}
+
+
+
+\end{mybox}
+
+
+
+\section{国内外研究现状}
+
+\section{研究内容及方法}
+
+\begin{mybox}
+\parindent=2em 本课题研究内容为UHPC深梁的抗剪机理，并基于拉-压杆模型(STM)提出更为适用的抗剪承载力公式。
+\subsection{试件设计及试验}
+\indent 考虑到UHPC的高性能，配置了高等级的纵向受拉钢筋使二者更好的协同工作，同时以配箍率、剪跨比为变化参数，对UHPC矩形梁进行抗剪研究。钢筋均采用HRB400牌号，为保证受剪破坏先于受弯破坏，试件底部须配较多钢筋使抗弯承载力
+有一定富余，故配以6层直径为28mm的纵向受拉钢筋(间距均为30mm)，顶部均布以一层直径为8mm的纵向钢筋，箍筋直径也均为8mm，剪跨比设定为1.2 $\rightarrow$ 1.5 $\rightarrow$ 1.8 $\rightarrow$ 2，
+在剪跨比一定时箍筋由疏到密布置，于试件顶部中央往两侧100mm处进行四点加载。
+\subsection{基于STM的抗剪分析方法}
+\indent 本课题采用STM(Strut-Tie Model)方法进行抗剪分析。平截面假定~\cite{刘鸿文2011材}指垂直于杆件轴线的各平截面（即杆的横截面）在杆件受拉伸、压缩或纯弯曲而变形后仍然为平面，
+并且同变形后的杆件轴线垂直。
+截面应变分布符合平截面假定结构区域称为B(Beam/Bernoulli)区,反之则称为D(Discontinunity/Disturbance)区~\cite{刘钊2008拉压杆模型在混凝土梁桥中应用与研究进展}。
+
+
+\end{mybox}
+
+\section{拟解决的关键科学问题}
+\subsection{抗剪机制}
+\subsection{抗剪计算公式}
+
+\section{主要技术路线}
+
+\section{创新点}
+
+\section{预期研究成果}
+
+
+
+\printbibliography
+\end{document}
